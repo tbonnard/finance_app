@@ -1,0 +1,45 @@
+{% extends 'app/base.html' %}
+
+{% block body %}
+
+
+<div class='section'>
+    <h3>SEARCH FOR A US COMPANY</h3>
+
+    <form action="" method="GET" class='margin_top margin_bottom' >
+        <input type="text" placeholder="Enter a US company's name" id='quote' class='search_bar' autocomplete="off" maxlength="20">
+    </form>
+</div>
+
+<div id='symbols_list' class='section'>
+    <!-- data created with JS fetch-->
+</div>
+
+
+
+<div class='section margin_top4'>
+    <h3>TOP ACTIVE STOCKS OF THE DAY</h3>
+    <table>
+        <thead>
+            <tr> 
+                <th class='table_heading'>Company</th>
+                <th class='table_heading'>Last price</th>
+                <th class='table_heading'>trade</th> 
+            </tr>
+        </thead> 
+        <tbody> 
+            {% for i in data %}
+            <tr>
+                <td class='table_cell'>{{i.companyName}}</td>
+                <td class='table_cell'>${{i.latestPrice}}</td>
+                <td class='table_cell'><a href="{% url 'symbol'  i.symbol %}">Buy / Sell</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+
+
+{% endblock %}

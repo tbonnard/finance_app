@@ -1,0 +1,60 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% load multiply %}
+
+{% block script %}
+<script src= "{% static 'app/profile.js' %}"></script>
+{% endblock %}
+
+{% block title %}{{request.user}} - Profile{% endblock %}
+
+{% block body %}
+
+<div class='section'>
+
+    <h3>MY CURRENT PORTFOLIO</h3>
+    
+    {% if portfolio|length > 0 %}
+        <table>
+            <thead>
+                <tr> 
+                    <th class='table_heading'>Company</th>
+                    <th class='table_heading'>Quantity</th>
+                    <th class='table_heading'>Avg price</th> 
+                    <th class='table_heading'>Value</th> 
+                    <th class='table_heading'>Variation</th> 
+                    <th class='table_heading'>trade</th> 
+                </tr>
+            </thead> 
+            <tbody> 
+                {% for i in portfolio %}
+                    {% if i.quantity > 0 %}
+                    <tr>
+                        <td class='table_cell'><a href="{% url 'symbol'  i.symbol %}">{{i.company_name}}</a></td>
+                        <td class='table_cell'>{{i.quantity}}</td>
+                        <td class='table_cell'>${{i.average_price_portfolio}}</td>
+                        <td class='table_cell' >${% multiply i.quantity i.average_price_portfolio %}</td>
+                        <!-- USING JS TO FETCH API TO GET CURRENT STOCK PRICE AND CALCULATE -->
+                        <td id='variation' data-symb="{{i.symbol }}" data-qty="{{i.quantity }}" data-avg="{{i.average_price_portfolio }}"></td>
+                        <td class='table_cell'><a href="{% url 'symbol'  i.symbol %}">Buy / Sell</a></td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        <div class='links margin_top_bottom'>
+            <a href="{% url 'transactions' %}">see all my transactions</a>
+        </div>
+
+     {% else %}   
+     <div class='links margin_top_bottom'>
+         <p>You don't have any stock yet</p>
+        <a href="{% url 'index' %}">trade</a>
+    </div>
+    {% endif %}
+</div>
+
+
+
+{% endblock %}

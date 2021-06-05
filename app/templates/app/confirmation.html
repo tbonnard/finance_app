@@ -1,0 +1,27 @@
+{% extends 'app/base.html' %}
+{% block title %}Confirmation{% endblock %}
+
+{% block body %}
+
+<div class='section'>
+    <h3>CONFIRMATION</h3>
+
+    <div class='margin_top2'>
+        <p>Your transaction is successful</p>
+        <p>find your unique ID below</p>
+    </div>
+
+
+    <div class='margin_bottom'>
+        <!-- <h3>ID</h3> -->
+    </div>
+
+
+</div>
+
+<div class='links margin_top'>
+    <a href="{% url 'profile' %}">see my portfolio</a>
+</div>
+
+
+{% endblock %}

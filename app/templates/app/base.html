@@ -1,0 +1,86 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="{% static 'app/styles.css' %}" type="text/css" rel="stylesheet">
+    <script src= "{% static 'app/script.js' %}"></script>
+    <script src= "{% static 'app/balance.js' %}"></script>
+    {% block script %}
+    {% endblock %}
+    <title>{% block title %}Finance App{% endblock %}</title>
+</head>
+<body>
+
+    <div class='topNav'>
+
+        <div>
+            <a href="/" ><h1>
+                <span class="blue logo">F</span>
+                <span class="red logo">I</span>
+                <span class="yellow logo">N</span>
+                <span class="blue logo">A</span>
+                <span class="green logo">N</span>
+                <span class="red logo">C</span>
+                <span class="yellow logo">E</span>  
+                <span class='logo'> App</span></h1>
+            </a>
+        </div>
+
+        <div class='subTopNav'>
+            {% if request.user.is_authenticated %}
+            <div class='links' >
+                <a href="{% url 'profile' %}">{{request.user|title}}</a>
+            </div>
+
+            <div id='user_details'>
+                <!-- data created with JS fetch-->
+            </div>
+
+            <div class='links'>
+                <a href="{% url 'logout' %}">Logout</a>
+
+
+            </div>
+
+            {% else %}
+            <div class='links'>
+                <a href="{% url 'login' %}">Login</a>
+            </div>
+            <div class='links'>
+                <a href="{% url 'signup' %}">Signup</a>
+            </div>
+
+            {% endif %}
+        </div>
+
+    </div>
+
+    <div class='block margin_top3'>
+    {% block body %}
+
+    {% endblock %}
+    </div>
+
+    <div class='footer'>
+
+        <div class='footer_div'>
+            <a href="/">Home</a>
+        </div>
+
+        <div class='footer_div'>
+            <a href="{% url 'profile' %}">Profile</a>
+        </div>
+
+        <div class='footer_div'>
+            <a href="https://iexcloud.io" target="_blank"> Data provided by IEX Cloud</a>
+        </div>
+
+    </div>
+
+</body>
+</html>

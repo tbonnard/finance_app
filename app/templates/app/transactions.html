@@ -1,0 +1,38 @@
+{% extends 'app/base.html' %}
+{% block title %}Transactions{% endblock %}
+
+{% block body %}
+
+<div class='section'>
+    <h3>MY TRANSACTIONS</h3>
+    <table>
+        <thead>
+            <tr> 
+                <th class='table_heading'>Symbol</th>
+                <th class='table_heading'>Quantity</th>
+                <th class='table_heading'>Type</th> 
+                <th class='table_heading'>Price</th> 
+                <th class='table_heading'>Cost</th> 
+                <th class='table_heading'>Date</th> 
+                <th class='table_heading'>ID</th> 
+            </tr>
+        </thead> 
+        <tbody> 
+            {% for i in histo %}
+            <tr>
+                <td class='table_cell'><a href="{% url 'symbol'  i.symbol %}">{{i.symbol}}</a></td>
+                <td class='table_cell'>{{i.quantity}}</td>
+                <td class='table_cell'>{% if i.transaction_type == '1'  %} Buy {% else %} Sell {% endif %}</td>
+                <td class='table_cell'>${{i.unit_price_transaction}}</td>
+                <td class='table_cell'>${{i.total_price_transaction}}</td>
+                <td class='table_cell'>{{i.timestamp|date:"d/m/y h:i:s" }}</td>
+                <td class='table_cell'>{{i.transaction_id}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+
+{% endblock %}

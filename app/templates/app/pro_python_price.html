@@ -1,0 +1,16 @@
+<!-- 
+    
+USING JS CALL TO GET LAST STOCK PRICE & CALCULATE VARIATION AS IT IS FASTER
+BUT IN CASE, HERE WAS THE WAY TO DO IT USING PYTHON TEMPLATES TAG
+
+USING PYTHON TO CALCULATE VARIATION -- API CALL TO GET CURRENT STOCK PRICE
+    {% variation i.quantity i.average_price_portfolio i.symbol as varia %}
+    {% block translate %}
+    {% if varia >= 0 %}
+    <td class="green table_cell">{{varia}}%</td>
+    {% else %}      
+    <td class="red table_cell">{{varia}}%</td>
+    {% endif %}                  
+{% endblock translate %}
+
+-->

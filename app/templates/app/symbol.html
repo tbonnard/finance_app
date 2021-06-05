@@ -1,0 +1,107 @@
+{% extends 'app/base.html' %}
+
+{% block title %}Quote{% endblock %}
+
+{% block body %}
+
+<div class='section'>
+
+    {% if message %}
+        <p class='warning'>{{message}}</p>
+    {% endif %}
+
+    <div class='portfolio_left'>
+
+        <h3>{{symbol.companyName}}</h3>
+
+        <table>
+            <thead>
+                <tr> 
+                    <th class='table_heading'>Last</th>
+                    <th class='table_heading'>Chg</th>
+                    <th class='table_heading'>Chg</th> 
+                    <th class='table_heading'>High year</th> 
+                    <th class='table_heading'>Low year</th> 
+                    <th class='table_heading'>YtD Change</th> 
+
+                </tr>
+            </thead> 
+            <tbody> 
+                <tr> 
+                    <td class='table_cell'>${{symbol.latestPrice}}</td>
+
+                    {% if symbol.change >= 0 %}
+                        <td class="green table_cell">{{symbol.change}}</td>
+                    {% else %}      
+                        <td class="red table_cell">{{symbol.change}}</td>
+                    {% endif %}
+
+                    {% if symbol.changePercent >= 0 %}
+                        <td class="green table_cell" id="percent">{{symbol.changePercent}}</td>
+                    {% else %}      
+                        <td class="red table_cell" id="percent">{{symbol.changePercent}}</td>
+                    {% endif %}
+
+                    <td class='table_cell'>${{symbol.week52High}}</td>
+                    <td class='table_cell'>${{symbol.week52Low}}</td>     
+                    
+                    {% if symbol.ytdChange >= 0 %}
+                    <td class="green table_cell" id="percent">{{symbol.ytdChange}}</td>
+                {% else %}      
+                    <td class="red table_cell" id="percent">{{symbol.ytdChange}}</td>
+                {% endif %}
+
+                </tr>
+            </tbody>
+        </table>
+        
+
+        <p class='info'>{{symbol.symbol}}</p>
+        <p class='info'>{{symbol.primaryExchange}}</p>
+        <p class='info'>Last update: {{symbol.latestTime}}</p>
+        {% if symbol.isUSMarketOpen == False %}
+            <p class='info'>closed market</p>
+        {%else %}
+            <p class='info'>open market</p>
+        {%endif%}
+    </div>
+
+    <div>
+        {% if request.user.is_authenticated %}
+        <div>
+            <h3>TRADE {{symbol.companyName|upper}}</h3>
+
+            <div class='margin_top1'>
+                <form action='' method='POST'>
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type='submit' value='Confirm'  class='input'/>
+                </form>
+            </div>
+
+        </div>
+        {% else %}
+        <div>You must be connected to buy / sell stocks</div>
+        <div class='section2'>
+            <div class='links'>
+                <a href="{% url 'login' %}">Login</a>
+            </div>
+            <div class='links'>
+                <a href="{% url 'signup' %}">Signup</a>
+            </div>
+        </div>
+
+        {% endif %}
+
+
+        {% if stock_qty %}
+        <div class='margin_top2'>
+            <p>Your portfolio already holds {{stock_qty}} stocks at an average price of {{stock_avg_price}}</p>
+        </div>
+        {% endif %}
+
+    </div>
+ 
+</div>
+
+{% endblock %}

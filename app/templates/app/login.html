@@ -1,0 +1,24 @@
+{% extends 'app/base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block body %}
+
+<div class='section'>
+    <h3>LOGIN</h3>
+
+    <div class='margin_top2'>
+        <form action="" method='POST'>{% csrf_token %}
+            {{ form.as_p }}
+            <input type='submit' value='Login' class='input'/>
+        </form>
+    </div>
+</div>
+
+
+<div class='links'>
+    Do you want to create an account? 
+    <a href="{% url 'signup' %}">Signup</a>
+</div>
+
+{% endblock %}
