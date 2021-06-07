@@ -205,11 +205,26 @@ table{
     vertical-align: bottom;
     width: 220px;
     text-align: center;
+    min-width: 90px;
+}
+
+.table_heading1 {
+    padding: 0 0 6px 5px;
+    font-weight: 600;
+    font-size: .64286rem;
+    color: #6a6a6a;
+    border-bottom: 1px solid #e1e1e1;
+    letter-spacing: .025em;
+    text-transform: uppercase;
+    vertical-align: bottom;
+    width: 220px;
+    text-align: center;
 }
 .table_cell {
     font-size: 14px;
     padding: 10px 0 0 0;
     text-align: center;
+
 }
 
 

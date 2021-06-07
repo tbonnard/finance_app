@@ -15,7 +15,7 @@
     <h3>MY CURRENT PORTFOLIO</h3>
     
     {% if portfolio|length > 0 %}
-        <table>
+        <table class='table1'>
             <thead>
                 <tr> 
                     <th class='table_heading'>Company</th>
@@ -32,7 +32,7 @@
                     <tr>
                         <td class='table_cell'><a href="{% url 'symbol'  i.symbol %}">{{i.company_name}}</a></td>
                         <td class='table_cell'>{{i.quantity}}</td>
-                        <td class='table_cell'>${{i.average_price_portfolio}} - <span id='{{i.symbol }}'></span></td>
+                        <td class='table_cell'>${{i.average_price_portfolio}} / <span id='{{i.symbol }}'></span></td>
                         <td class='table_cell' >${% multiply i.quantity i.average_price_portfolio %}</td>
                         <!-- USING JS TO FETCH API TO GET CURRENT STOCK PRICE AND CALCULATE -->
                         <td id='variation' data-symb="{{i.symbol }}" data-qty="{{i.quantity }}" data-avg="{{i.average_price_portfolio }}"></td>
