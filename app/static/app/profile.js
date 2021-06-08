@@ -18,6 +18,8 @@ document.addEventListener('DOMContentLoaded', function() {
             varia.innerHTML = `${variation_perc.toFixed(2)}%`;
             varia.title = `$${last_price}`;
             document.querySelector(`#${symbol}`).innerHTML = `$${last_price}`;
+            val = last_price * document.querySelector(`#value_${symbol}`).dataset.qty;
+            document.querySelector(`#value_${symbol}`).innerHTML = `$${val.toFixed(2)} `;
         })
     })
 
