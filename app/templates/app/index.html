@@ -19,6 +19,14 @@
 
 <div class='section margin_top4'>
     <h3>TOP ACTIVE STOCKS OF THE DAY</h3>
+
+    {% if message %}
+    <div>
+        <p class='info'>{{message}}</p>
+    </div>
+    {% endif %}
+    
+    {% if data %}
     <table>
         <thead>
             <tr> 
@@ -37,6 +45,12 @@
             {% endfor %}
         </tbody>
     </table>
+    {% else %}
+    <div>
+        <p class='info'>Stok market is currently closed. No data to display</p>
+    </div>    
+    {% endif %}
+
 </div>
 
 

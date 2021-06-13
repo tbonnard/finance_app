@@ -25,7 +25,7 @@ def index_view(request):
         resp = requests.get(url_most_active).json()
         return render(request, 'app/index.html', {'data': resp})
     except:
-        return render(request, 'app/index.html', {})
+        return render(request, 'app/index.html', {'message':"It seems the API does not return any data... please refresh or come back later.. sorry."})
 
 def signup_view(request):
     if request.user.is_authenticated:
@@ -85,6 +85,12 @@ def generate_transaction_id():
             generate_transaction_id()
         return "".join(transaction_id)
 
+
+def create_transaction(user,qty, tr_type, symbol, quote_price, total_price):
+    transaction_id=generate_transaction_id()
+    transaction = HistoryTransactions.objects.create(user=user, quantity = int(qty), transaction_type = tr_type, symbol = symbol, unit_price_transaction = quote_price, total_price_transaction=total_price, transaction_id=transaction_id)
+    transaction.save()
+
 def symbol_view(request, symbol):
     try:
         symbol_query = get_stock_price(symbol)
@@ -108,9 +114,7 @@ def symbol_view(request, symbol):
                 user_balance = AccountsBalance.objects.get(user=request.user)
                 if tr_type == '1':
                     if total_price <= user_balance.balance:
-                        transaction_id=generate_transaction_id()
-                        transaction = HistoryTransactions.objects.create(user=request.user, quantity = int(qty), transaction_type = tr_type, symbol = symbol, unit_price_transaction = quote_price, total_price_transaction=total_price, transaction_id=transaction_id)
-                        transaction.save()
+                        create_transaction(request.user, qty, tr_type, symbol, quote_price, total_price)
                         user_balance.balance -= decimal.Decimal(total_price)
                         user_balance.save()
                         if CurrentPortfolio.objects.filter(user=request.user, symbol = symbol):
@@ -127,9 +131,7 @@ def symbol_view(request, symbol):
                 if CurrentPortfolio.objects.filter(user=request.user, symbol = symbol):
                     portfolio = CurrentPortfolio.objects.get(user=request.user, symbol = symbol)
                     if portfolio.quantity >= int(qty):
-                        transaction_id=generate_transaction_id()
-                        transaction = HistoryTransactions.objects.create(user=request.user, quantity = int(qty), transaction_type = tr_type, symbol = symbol, unit_price_transaction = quote_price, total_price_transaction=total_price, transaction_id=transaction_id)
-                        transaction.save()
+                        create_transaction(request.user, qty, tr_type, symbol, quote_price, total_price)
                         user_balance.balance += decimal.Decimal(total_price)
                         user_balance.save()
                         portfolio.quantity = portfolio.quantity - int(qty)
